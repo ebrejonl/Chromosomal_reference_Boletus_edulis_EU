@@ -1,4 +1,7 @@
-# Boletus edulis assembly <img src="https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332" alt="logo" width="60: 3em;"></img>
+<div style="display: flex; align-items: center;">
+    <img src="https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332" alt="logo" width="60px">
+    <h1>Boletus edulis assembly</h1>
+</div>
 
 This is the repository that accompanies the publication: doi:///
 
