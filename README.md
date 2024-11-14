@@ -1,7 +1,4 @@
-<div style="display: flex; align-items: center;">
-    <img src="https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332" alt="logo" width="180px">
-    <h1>Boletus edulis assembly</h1>
-</div>
+# Boletus edulis chr assembly <img src='https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332' align="right" height="138" /></a>
 
 This is the repository that accompanies the publication: doi:///
 
