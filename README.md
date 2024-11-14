@@ -1,4 +1,4 @@
-# Boletus edulis chr assembly <img src='https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332' align="right" height="138" /></a>
+# Boletus edulis chr assembly <img src='https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332' align="right" height="176" /></a>
 
 This is the repository that accompanies the publication: doi:///
 
