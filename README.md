@@ -1,0 +1,1 @@
+# Chromosomal_reference_Boletus_edulis_EU
