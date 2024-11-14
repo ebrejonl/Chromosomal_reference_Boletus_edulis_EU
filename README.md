@@ -1,4 +1,4 @@
-# Boletus edulis chr assembly <img src='https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332' align="right" height="300" /></a>
+# Boletus edulis chromosomal assembly <img src='https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332' align="right" height="300" /></a>
 
 
 
