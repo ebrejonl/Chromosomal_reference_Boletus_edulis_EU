@@ -6,7 +6,7 @@
 
 This is the repository that accompanies the publication: doi:///
 
-# This is a snakemake pipeline for all analysis, with software packaged in containers for reproducibility.
+## This is a snakemake pipeline for all analysis, with software packaged in containers for reproducibility.
 to run the pipeline, you need the following:
 - Snakemake url
 - a cluster system with slurm url
