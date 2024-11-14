@@ -1,4 +1,4 @@
-# Chromosomal_reference_Boletus_edulis_EU image: ![logo](logo_ref.png)
+# Chromosomal_reference_Boletus_edulis_EU image: <img src="logo_ref.png" alt="Logo" width="40">
 
 This is the repository that accompanies the publication: doi:///
 
