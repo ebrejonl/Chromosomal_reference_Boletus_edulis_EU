@@ -30,7 +30,6 @@
 *MAPPING/*
 *Variant_Calling/*
 Data/*
-*DATA/*
 *.log
 *.snakemake*
 *.out
