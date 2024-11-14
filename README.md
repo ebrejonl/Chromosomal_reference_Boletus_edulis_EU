@@ -1,4 +1,4 @@
-# Chromosomal assembly Boletus_edulis <img src="https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332" alt="logo" width="120"/>
+# Chromosomal assembly Boletus_edulis <img src="https://github.com/user-attachments/assets/5d2d4735-d930-4a44-9abc-af66fcadc332" alt="logo" width="120": 3em></img>
 
 This is the repository that accompanies the publication: doi:///
 
