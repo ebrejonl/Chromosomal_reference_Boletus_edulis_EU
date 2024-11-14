@@ -10,3 +10,4 @@ to run the pipeline, you need the following:
 
 The reference genome assemblies can be found and downloaded from here: url NCBI accession: 
 
+Individual analysis/commands can be found in the ./rules folder
