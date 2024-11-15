@@ -22,4 +22,4 @@
 
 
 ## script for laptop
-snakemake --cores 15 --use-conda --rerun-incomplete --use-singularity --rulegraph --dry-run
+snakemake --cores 15 --use-conda --rerun-incomplete --use-singularity #--dry-run #--rulegraph

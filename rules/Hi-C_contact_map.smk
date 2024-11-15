@@ -27,7 +27,7 @@ rule Hi_c_map:
     container: c_popgen
     shell:
         """
-            scripts/juicer.sh \
+            java -jar /opt/juicer/scripts/common/juicer_tools.1.9.9_jcuda.0.8.jar \
             -d {params.output_dir} \
             -z {input.ref} \
             -p {input.chrom_sizes} \
