@@ -27,7 +27,7 @@ rule Hi_c_map:
     container: c_popgen
     shell:
         """
-        {params.juicer_dir}/scripts/juicer.sh \
+            scripts/juicer.sh \
             -d {params.output_dir} \
             -z {input.ref} \
             -p {input.chrom_sizes} \

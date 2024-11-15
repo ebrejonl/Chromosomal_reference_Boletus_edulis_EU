@@ -22,13 +22,4 @@
 
 
 ## script for laptop
-snakemake --jobs 50 \
-  -p \
-  --default-resources mem_mb=12 threads=1 \
-  --use-singularity \
-  --use-conda \
-  --rerun-triggers mtime \
-  --latency-wait 1000 \
-  --rerun-incomplete \
-  --keep-going  \
-  --dry-run
+snakemake --cores 15 --use-conda --rerun-incomplete --use-singularity --rulegraph --dry-run
