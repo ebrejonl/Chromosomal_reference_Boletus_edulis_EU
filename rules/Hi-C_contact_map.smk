@@ -1,7 +1,7 @@
 
 rule prep_juicer:
     input:
-        ref_fasta="Data/Edulis/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
+        ref_fasta_index="Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta.fai.fai"
     output:
         chrom.sizes="Results/juicer/chrom.sizes"
     params:
@@ -9,14 +9,14 @@ rule prep_juicer:
     shell:
         """
         mkdir -p {params.output_dir}
-        cut -f1,2 {input.ref_fasta} > {output.chrom.sizes}
+        cut -f1,2 {input.ref_fasta_index} > {output.chrom.sizes}
         """
 
 rule Hi_c_map:
     input: 
-        fq1= "Data/hi_c_1.fq.gz",
-        fq2= "Data/hi_c_2.fq.gz",
-        ref= "Data/Edulis/Haplotype2_renamed_reordered_Chr_only.fasta",
+        fq1= "Data/HiC/hi_c_1.fq.gz",
+        fq2= "Data/HiC/hi_c_2.fq.gz",
+        ref= "Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta",
         chrom.sizes="Results/juicer/chrom.sizes"
      output: 
         contact_map="Results/juicer/contact_map.hic"
