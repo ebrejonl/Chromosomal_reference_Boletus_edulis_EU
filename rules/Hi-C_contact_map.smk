@@ -22,9 +22,9 @@ rule Hi_c_map:
         contact_map="Results/juicer/contact_map.hic"
       params:
         output_dir="Results/juicer",  # Path to output directory
-        genome_id="hg38",  # path tp chr size file??
+        genome_id="BolEdBiel_h2",
+        threads=15
      container: c_popgen
-     threads: 15
          shell:
         """
         {params.juicer_dir}/scripts/juicer.sh \
@@ -32,7 +32,6 @@ rule Hi_c_map:
             -z {input.reference} \
             -p {params.output_dir}/chrom.sizes \
             -g {params.genome_id} \
-            #-s HindIII \  # Change enzyme as needed
             -t {params.threads} \
-            -f {input.fastq1},{input.fastq2}
+            -f {input.fq1},{input.fq2}
         """
