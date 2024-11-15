@@ -30,4 +30,5 @@ snakemake --jobs 50 \
   --rerun-triggers mtime \
   --latency-wait 1000 \
   --rerun-incomplete \
-  --keep-going  #--dry-run
+  --keep-going  \
+  --dry-run
