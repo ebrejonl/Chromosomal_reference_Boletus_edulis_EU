@@ -29,8 +29,8 @@ rule Hi_c_map:
         """
         {params.juicer_dir}/scripts/juicer.sh \
             -d {params.output_dir} \
-            -z {input.reference} \
-            -p {params.output_dir}/chrom.sizes \
+            -z {input.ref} \
+            -p {input.chrom.sizes} \
             -g {params.genome_id} \
             -t {params.threads} \
             -f {input.fq1},{input.fq2}
