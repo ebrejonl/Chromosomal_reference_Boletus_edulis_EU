@@ -8,8 +8,8 @@ rule Hi_c_map:
       params:
         juicer_dir="path/to/juicer",  # Path to Juicer directory
         output_dir="results/juicer",  # Path to output directory
-        genome_id="hg38",  # Change as needed (e.g., hg19, mm10)
-     container: c_geno
+        genome_id="hg38",  # path tp chr size file??
+     container: c_popgen
      threads: 15
          shell:
         """

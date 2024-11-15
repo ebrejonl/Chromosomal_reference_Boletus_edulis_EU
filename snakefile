@@ -16,8 +16,9 @@ rule all:
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ rules ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-include: "./rules/Genotyping_Hap1.smk"
-include: "./rules/Genotyping_Hap2.smk"
-include: "./rules/structure.smk"
-include: "./rules/Telomeres_pred.smk" 
-include: "./rules/Coverage_data.smk" 
+#include: "./rules/Genotyping_Hap1.smk"
+#include: "./rules/Genotyping_Hap2.smk"
+#include: "./rules/structure.smk"
+#include: "./rules/Telomeres_pred.smk" 
+#include: "./rules/Coverage_data.smk" 
+include: "./rules/Hi-C_contact_map.smk"
