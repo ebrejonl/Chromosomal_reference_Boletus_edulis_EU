@@ -22,6 +22,8 @@ rule align_hic_reads:
     threads: 17
     shell:
         """
+        # index reference genome
+        bwa-mem2 index {input.ref}
         # Align Hi-C reads using BWA-MEM2 and output SAM format
         bwa-mem2 mem -t {threads} \
         -M -R "@RG\\tID:HiC_Align\\tSM:HiC_Sample" \
@@ -32,26 +34,24 @@ rule align_hic_reads:
         """
 
 
-
-
-rule Hi_c_map:
-    input: 
-        fq1= "Data/HiC/hi_c_1.fq.gz",
-        fq2= "Data/HiC/hi_c_2.fq.gz",
-        ref= "Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta",
-        chrom_sizes="Results/juicer/chrom.sizes"
-    output: 
-        contact_map="Results/juicer/contact_map.hic"
-    params:
-        output_dir="Results/juicer",  # Path to output directory
-        genome_id="BolEdBiel_h2",
-        threads=15
-    container: c_popgen
-    shell:
-        """
-            java -jar /opt/juicer/scripts/common/juicer_tools.1.9.9_jcuda.0.8.jar pre \
-            {input.fq1} {input.fq2} {output.contact_map} \
-            -t {params.threads} \
-            -g {params.genome_id} \
-            -p {input.chrom_sizes}
-        """
+#rule Hi_c_map:
+#    input: 
+#        fq1= "Data/HiC/hi_c_1.fq.gz",
+#        fq2= "Data/HiC/hi_c_2.fq.gz",
+#        ref= "Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta",
+#        chrom_sizes="Results/juicer/chrom.sizes"
+#    output: 
+#        contact_map="Results/juicer/contact_map.hic"
+#    params:
+#        output_dir="Results/juicer",  # Path to output directory
+#        genome_id="BolEdBiel_h2",
+#        threads=15
+#    container: c_popgen
+#    shell:
+#        """
+#            java -jar /opt/juicer/scripts/common/juicer_tools.1.9.9_jcuda.0.8.jar pre \
+#            {input.fq1} {input.fq2} {output.contact_map} \
+#            -t {params.threads} \
+#            -g {params.genome_id} \
+#            -p {input.chrom_sizes}
+#        """
