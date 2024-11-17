@@ -33,25 +33,40 @@ rule align_hic_reads:
         samtools view -bS {output.sam} > {output.bam}
         """
 
+rule sort_and_index_bam:
+    input:
+        bam="Results/juicer/aligned_reads.bam"
+    output:
+        sorted_bam="Results/juicer/aligned_reads.sorted.bam",
+        bam_index="Results/juicer/aligned_reads.sorted.bam.bai"
+    container: c_geno
+    shell:
+        """
+        # Sort the BAM file
+        samtools sort -o {output.sorted_bam} {input.bam}
 
-#rule Hi_c_map:
-#    input: 
-#        fq1= "Data/HiC/hi_c_1.fq.gz",
-#        fq2= "Data/HiC/hi_c_2.fq.gz",
-#        ref= "Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta",
-#        chrom_sizes="Results/juicer/chrom.sizes"
-#    output: 
-#        contact_map="Results/juicer/contact_map.hic"
-#    params:
-#        output_dir="Results/juicer",  # Path to output directory
-#        genome_id="BolEdBiel_h2",
-#        threads=15
-#    container: c_popgen
-#    shell:
-#        """
-#            java -jar /opt/juicer/scripts/common/juicer_tools.1.9.9_jcuda.0.8.jar pre \
-#            {input.fq1} {input.fq2} {output.contact_map} \
-#            -t {params.threads} \
-#            -g {params.genome_id} \
-#            -p {input.chrom_sizes}
-#        """
+        # Index the sorted BAM file
+        samtools index {output.sorted_bam}
+        """
+
+
+rule Hi_c_map:
+    input:
+        sorted_bam="Results/juicer/aligned_reads.sorted.bam",
+        chrom_sizes="Results/juicer/chrom.sizes"
+    output:
+        contact_map="Results/juicer/contact_map.hic"
+    params:
+        output_dir="Results/juicer",  # Output directory
+        genome_id="BolEdBiel_h2",  # Genome identifier
+        threads=15  # Number of threads
+    container: c_popgen
+    shell:
+        """
+        # Run Juicer Tools to generate the contact map
+        java -jar /opt/juicer/scripts/common/juicer_tools.1.9.9_jcuda.0.8.jar pre \
+            {input.sorted_bam} {output.contact_map} \
+            -t {params.threads} \
+            -g {params.genome_id} \
+            -p {input.chrom_sizes}
+        """
