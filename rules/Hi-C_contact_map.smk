@@ -57,16 +57,16 @@ rule Hi_c_map:
     output:
         contact_map="Results/juicer/contact_map.hic"
     params:
-        output_dir="Results/juicer",  # Output directory
-        genome_id="BolEdBiel_h2",  # Genome identifier
-        threads=15  # Number of threads
+        output_dir="Results/juicer/map",  # Output directory
+        genome_id="Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta",  # Genome identifier
     container: c_popgen
+    threads: 17
     shell:
         """
         # Run Juicer Tools to generate the contact map
+        mkdir -p {params.output_dir}
         java -jar /opt/juicer/scripts/common/juicer_tools.1.9.9_jcuda.0.8.jar pre \
-            {input.sorted_bam} {output.contact_map} \
-            -t {params.threads} \
+            {input.sorted_bam} {params.output_dir}/contact_map.hic \
             -g {params.genome_id} \
             -p {input.chrom_sizes}
         """
