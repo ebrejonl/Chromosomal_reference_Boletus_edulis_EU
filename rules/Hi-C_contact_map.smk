@@ -26,7 +26,7 @@ rule align_hic_reads:
         bwa-mem2 index {input.ref}
         # Align Hi-C reads using BWA-MEM2 and output SAM format
         bwa-mem2 mem -t {threads} \
-        -M -R "@RG\\tID:HiC_Align\\tSM:HiC_Sample" \
+        -A 1 -B 4 -E 50 -L 0 -t 15 -M -R "@RG\\tID:HiC_Align\\tSM:HiC_Sample" \
         {input.ref} {input.fq1} {input.fq2} > {output.sam}
 
         # Convert SAM to BAM format using samtools
@@ -49,24 +49,41 @@ rule sort_and_index_bam:
         samtools index {output.sorted_bam}
         """
 
+rule generate_pairs:
+    input:
+        sorted_bam="Results/juicer/aligned_reads.sorted.bam",
+        chrom_sizes="Results/juicer/chrom.sizes"
+    output:
+        pairs="Results/juicer/aligned_reads.pairs",
+        dedup_pairs="Results/juicer/aligned_reads.dedup.pairs"
+    container: c_geno
+    shell:
+        """
+        # Parse BAM into .pairs file
+        pairtools parse --assembly {input.chrom_sizes} --output {output.pairs} {input.sorted_bam}
+
+        # Sort the .pairs file
+        pairtools sort --output {output.pairs} {output.pairs}
+
+        # Deduplicate the .pairs file
+        pairtools dedup --output {output.dedup_pairs} {output.pairs}
+        """
 
 rule Hi_c_map:
     input:
-        sorted_bam="Results/juicer/aligned_reads.sorted.bam",
+        pairs="Results/juicer/aligned_reads.dedup.pairs",
         chrom_sizes="Results/juicer/chrom.sizes"
     output:
         contact_map="Results/juicer/contact_map.hic"
     params:
         output_dir="Results/juicer/map",  # Output directory
-        genome_id="Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta",  # Genome identifier
     container: c_popgen
     threads: 17
     shell:
         """
-        # Run Juicer Tools to generate the contact map
+        # Run Juicer Tools to generate the contact map from .pairs file
         mkdir -p {params.output_dir}
         java -jar /opt/juicer/scripts/common/juicer_tools.1.9.9_jcuda.0.8.jar pre \
-            {input.sorted_bam} {params.output_dir}/contact_map.hic \
-            -g {params.genome_id} \
-            -p {input.chrom_sizes}
+            -p {input.pairs} {params.output_dir}/contact_map.hic \
+            -g {input.chrom_sizes}
         """
