@@ -20,6 +20,7 @@
 *.tsv
 *.tex
 *.nsq
+*.pairs
 *.nhr
 *.nsq
 .Rproj.user
