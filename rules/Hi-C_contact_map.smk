@@ -56,13 +56,15 @@ rule generate_pairs:
     output:
         pairs="Results/juicer/aligned_reads.pairs",
         dedup_pairs="Results/juicer/aligned_reads.dedup.pairs"
-    container: c_geno
+    container: c_popgen
     shell:
         """
-        # Parse BAM into .pairs file
-        pairtools parse --assembly {input.chrom_sizes} --output {output.pairs} {input.sorted_bam}
+        touch {input.chrom_sizes}
+        # Parse BAM into .pairs file using the chrom.sizes file as genome
+        pairtools parse -c --chroms-path Results/juicer/chrom.sizes --output {output.pairs} {input.sorted_bam}
 
         # Sort the .pairs file
+        pairtools header generate {output.pairs}
         pairtools sort --output {output.pairs} {output.pairs}
 
         # Deduplicate the .pairs file

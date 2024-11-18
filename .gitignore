@@ -19,6 +19,7 @@
 *.xls
 *.tsv
 *.tex
+*.cache*
 *.nsq
 *.pairs
 *.nhr
