@@ -11,7 +11,7 @@ c_synteny = config['sif_synteny']
 rule all:
     input:
         "Results/juicer/chrom.sizes",
-        "Results/juicer/aligned_reads.bam",
+        #"Results/juicer/aligned_reads.bam",
         "Results/juicer/contact_map.hic"
 
 
