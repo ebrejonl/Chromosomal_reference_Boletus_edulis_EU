@@ -16,17 +16,17 @@ rule prep_juicer:
 
 rule juicer:
     input:
-        fq1 = "Data/HiC/fastq/hi_c_R1.fastq.gz",
-        fq2 = "Data/HiC/fastq/hi_c_R2.fastq.gz",
+        fq1 = "fastq/hi_c_R1.fastq.gz",
+        fq2 = "fastq/hi_c_R2.fastq.gz",
         chrom_sizes="Results/juicer/chrom.sizes",
         ref="Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta"
     params:
-        dir="Data/HiC",
+        dir="/home/etiennebrejon/Desktop/work/Dropbox/Reference_genome_21_02_2024/14_11/Chromosomal_reference_Boletus_edulis_EU",
         genome="BolEdBiel_h2"
     output:
         bam = "Results/juicer/contact_map.hic"
     container: c_popgen
-    threads: 17
+    threads: 12
     shell:
         """
         /opt/juicer/CPU/juicer.sh -z {input.ref} -p {input.chrom_sizes} -d {params.dir} -g {params.genome} \
