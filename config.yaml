@@ -3,7 +3,7 @@
 # for genotyping
 sif_genotyping: "docker://ebrejonl/genotyping_wgs_data:v1"
 #sif_genotyping: '/prj/porcini/CONTAINERS_LOCAL/genotyping_wgs_data_v1.sif'
-sif_popgen: "docker://ebrejonl/container_pop_genomics:v0.6"
+sif_popgen: "docker://ebrejonl/container_pop_genomics:v0.7"
 #sif_popgen: '/prj/porcini/CONTAINERS_LOCAL/pop_genomics_v0.3.sif'
 sif_synteny: "docker://ebrejonl/container_comp_genomics:v0.3"
 #sif_synteny: '/prj/porcini/CONTAINERS_LOCAL/container_comp_genomics_v0.3.sif'
