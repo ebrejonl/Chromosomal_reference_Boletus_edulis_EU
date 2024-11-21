@@ -12,6 +12,7 @@
 *.pdf
 *.png
 *.jpg
+*.txt
 *.hic
 *.gff
 *.gff3

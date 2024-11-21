@@ -1,0 +1,2 @@
+Thu Nov 21 17:31:10 CET 2024
+Experiment description: Sample name HiC_sample; Juicer version 2.0; BWA 0.7.17-r1188; 20 threads; openjdk version "11.0.25" 2024-10-15; Juicer Tools Version 1.9.9; /opt/juicer/CPU/juicer.sh -z Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta -p Results/juicer/chrom.sizes -d /home/etiennebrejon/Desktop/work/Dropbox/Reference_genome_21_02_2024/14_11/Chromosomal_reference_Boletus_edulis_EU -g BolEdBiel_h2 -D /opt/juicer
