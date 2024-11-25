@@ -10,6 +10,7 @@
 *.nosex
 *.svg
 *.pdf
+aligned/*/*
 *.bedge
 *.png
 *.jpg

@@ -32,7 +32,7 @@ rule juicer:
         export _JAVA_OPTIONS="-Xmx28000m -Xms28000m"
         /opt/juicer/CPU/juicer.sh -z {input.ref} -p {input.chrom_sizes} -d {params.dir} -g {params.genome} \
         -D /opt/juicer
-        mv {params.dir}/contact_map.hic {output.bam}
+       # mv {params.dir}/contact_map.hic {output.bam}
         """
 
 
