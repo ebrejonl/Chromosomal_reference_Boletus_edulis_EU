@@ -23,5 +23,5 @@
 
 ## script for laptop
 snakemake --cores 17 --use-conda --rerun-incomplete --use-singularity \
-    --singularity-args "--bind /home/etiennebrejon/Desktop/work/Dropbox/Reference_genome_21_02_2024/14_11/Chromosomal_reference_Boletus_edulis_EU" #\
+    --singularity-args "--bind /home/etiennebrejon/Desktop/work/Dropbox/Reference_genome_21_02_2024/14_11/Chromosomal_reference_Boletus_edulis_EU" #--dry-run #--rulegraph#\
     #--singularity-args "--bind /home/etiennebrejon/Desktop/work/Dropbox/Reference_genome_21_02_2024/14_11/Chromosomal_reference_Boletus_edulis_EU" #--dry-run #--rulegraph

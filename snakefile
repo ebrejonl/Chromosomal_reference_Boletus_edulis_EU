@@ -10,10 +10,10 @@ c_synteny = config['sif_synteny']
 
 rule all:
     input:
-        "Results/juicer/chrom.sizes",
+        #"Results/juicer/chrom.sizes",
         #"Results/juicer/aligned_reads.bam",
-        "Results/juicer/contact_map.hic"
-
+        #"Results/juicer/contact_map.hic"
+        "Results/Busco/busco_ghost.txt"
 
 
 
@@ -24,4 +24,5 @@ rule all:
 #include: "./rules/structure.smk"
 #include: "./rules/Telomeres_pred.smk" 
 #include: "./rules/Coverage_data.smk" 
-include: "./rules/Hi-C_contact_map.smk"
+#include: "./rules/Hi-C_contact_map.smk"
+include: "./rules/BUSCO.smk"
