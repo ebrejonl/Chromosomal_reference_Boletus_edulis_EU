@@ -11,6 +11,17 @@
 *.svg
 *.pdf
 aligned/*/*
+*.hmm
+ancestral*
+*.prfl
+*.md5
+*.info
+*.cfg
+*.pbl*
+*.orig*
+*.qii
+*_PARAMETERS.md
+
 *.bedge
 *.png
 *.jpg
