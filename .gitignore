@@ -21,7 +21,8 @@ ancestral*
 *.orig*
 *.qij
 *_PARAMETERS.md
-
+*_cutoff
+README.txt
 *.bedge
 *.png
 *.jpg
