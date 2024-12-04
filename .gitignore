@@ -22,7 +22,7 @@ ancestral*
 *.qij
 *_PARAMETERS.md
 *_cutoff
-README.txt
+README.TXT
 *.bedge
 *.png
 *.jpg
