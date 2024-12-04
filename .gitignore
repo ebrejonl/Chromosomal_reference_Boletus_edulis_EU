@@ -23,6 +23,9 @@ ancestral*
 *_PARAMETERS.md
 *_cutoff
 README.TXT
+*_splicefile
+*make.doc
+*.cfg*
 *.bedge
 *.png
 *.jpg
