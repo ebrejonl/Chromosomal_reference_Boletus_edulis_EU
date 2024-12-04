@@ -74,4 +74,4 @@ p1
 
 
 
-# script to make figure is in PI_DIVERSITY -> Plotting_Pi.R
+# script to make full figure is in PI_DIVERSITY -> Plotting_Pi.R
