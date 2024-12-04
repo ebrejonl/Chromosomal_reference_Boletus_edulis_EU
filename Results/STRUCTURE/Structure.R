@@ -71,3 +71,7 @@ xlab("PC1 5%")+ ylab("PC2 3.4%") +theme_classic()+
   guides(fill = guide_legend(nrow = 1))
 gc()
 p1
+
+
+
+# script to make figure is in PI_DIVERSITY -> Plotting_Pi.R
