@@ -41,10 +41,32 @@ lat=as.numeric(lat))
 print("merged")
 
 PEV
+#PEV "5%"   "3.4%" "3.1%" "2.7%" "2.6%"
+scores =scores|> dplyr::rename("5%"=X1,
+              "3.4%"=X2,
+            "3.1%"=X3,"2.7%"=X4)
 
-scores =scores|> dplyr::rename("5.4%"=X1,
-              "4.5%"=X2,
-            "4.1%"=X3,"4%"=X4)
+
+saveRDS(scores, "Results/STRUCTURE/Whole_genome_pca_with_pop.rds")
 
 
-saveRDS(scores, "Whole_genome_pca_with_pop.rds")
+
+mydata=readRDS("Results/STRUCTURE/Whole_genome_pca_with_pop.rds") |> 
+  mutate(Pop=case_when(
+    Pop=="Scandinavia" ~ "Fennoscandia", 
+    Pop=="South" ~ "Southern EU",
+    Pop=="USA"~"North America",
+    Pop=="GB"~"Great Britain", TRUE~as.character(Pop)))
+
+p1=ggplot(data = mydata, aes(x=mydata[,1],y=mydata[,2], fill=Pop)) + 
+      theme_apa() +
+        geom_vline(xintercept = 0, lty = 3 , alpha=0.6) +
+          geom_hline(yintercept = 0,lty = 3,alpha=0.6 )+
+            scale_fill_manual(values =met.brewer("Johnson", n=7, direction=-1), 
+          name="Population") +
+      geom_point(size=5, shape=21, color="black", alpha=0.5)  +
+geom_mark_ellipse(mapping=aes(x=mydata[,1],y=mydata[,2], fill=Pop))+
+xlab("PC1 5.4%")+ ylab("PC2 4.5%") +theme_classic()+ 
+  theme(legend.position = "top", legend.direction = "horizontal")+  
+  guides(fill = guide_legend(nrow = 1))
+p1
