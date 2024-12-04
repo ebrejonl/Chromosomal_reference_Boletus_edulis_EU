@@ -66,7 +66,8 @@ p1=ggplot(data = mydata, aes(x=mydata[,1],y=mydata[,2], fill=Pop)) +
           name="Population") +
       geom_point(size=5, shape=21, color="black", alpha=0.5)  +
 geom_mark_ellipse(mapping=aes(x=mydata[,1],y=mydata[,2], fill=Pop))+
-xlab("PC1 5.4%")+ ylab("PC2 4.5%") +theme_classic()+ 
+xlab("PC1 5%")+ ylab("PC2 3.4%") +theme_classic()+ 
   theme(legend.position = "top", legend.direction = "horizontal")+  
   guides(fill = guide_legend(nrow = 1))
+gc()
 p1
