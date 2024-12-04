@@ -3,7 +3,7 @@ rule PCA_prep_EU_indiv:
     input:
         "Data/VCF/EU_pop_all_site_unfiltered.vcf.gz" 
     output:
-        wgs_full="Chromosome_3/Whole_genomefiltered.vcf.gz"
+        wgs_full="Results/STRUCTURE/Whole_genomefiltered.vcf.gz"
     container: c_popgen
     threads: 20
     shell:
