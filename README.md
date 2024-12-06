@@ -3,14 +3,31 @@
 
 
 
-
 ### This is the repository that accompanies the publication: doi:///
 
 This is a snakemake pipeline for all analysis, with software packaged in containers for reproducibility.
 
 #### to run the pipeline, you need the following:
-- Snakemake url
-- a cluster system with slurm url
-- singularity/apptainer url
+- [Snakemake](https://snakemake.readthedocs.io)
+- a cluster system like [slurm](https://slurm.schedmd.com/documentation.html)
+- [singularity/apptainer/Docker](https://apptainer.org/documentation/)
+- 
 
-The reference genome assemblies can be found and downloaded from here: url NCBI accession: 
+The reference genome assembly can be found at PRJNA1187522 (available at publication)
+
+#### To run the full pipeline, look at the snakemake_launcher.sh file
+
+
+
+#### Individual steps can be found in the rules folder in their .smk files
+
+
+
+
+
+
+
+
+
+
+
