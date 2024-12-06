@@ -3,9 +3,9 @@
 
 rule geno_hap1:
     input:
-        ref= "Data/Edulis/Haplotype1_correct_names.fasta"
+        ref= "Data/Fasta/Haplotype1.fasta"
     output:
-        index_ghost="Haplotype1_geno/index_ghost.txt"
+        index_ghost="Data/Fasta/Haplotype1_geno/index_ghost.txt"
     container: c_geno
     threads: 1
     shell:
@@ -19,9 +19,9 @@ rule geno_hap1:
 rule MAPPING_EU_h1:
     input:
         index_ghost="Haplotype1_geno/index_ghost.txt",
-        I1 = "Data/Edulis/Keaton_EU_samples/{indiv}.1.trimmed.fastq.gz",
-        I2 = "Data/Edulis/Keaton_EU_samples/{indiv}.2.trimmed.fastq.gz",
-        ref= "Data/Edulis/Haplotype1_correct_names.fasta"
+        I1 = "Data/Fastq/{indiv}.1.trimmed.fastq.gz",
+        I2 = "Data/Fastq/{indiv}.2.trimmed.fastq.gz",
+        ref= "Data/Edulis/Haplotype1.fasta"
     output:
         O1="Data/MAPPING/Haplotype1_geno/{indiv}_mapping/{indiv}.bam.gz"
     container: c_geno
