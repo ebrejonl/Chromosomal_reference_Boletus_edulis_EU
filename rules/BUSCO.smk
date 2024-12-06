@@ -26,3 +26,22 @@ busco -i {input.fasta2} \
     --cpu 18
     touch {output.ghost_busco}
         """
+
+
+rule plotBusco:
+    input:
+        fai="Data/Fasta/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
+    output:
+        busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS"
+    container: c_R 
+    script:
+        "rules/Rscripts/Synteny_btw_haplo.R"
+
+rule Gene_TE_comp:
+    input:
+        fai="Data/Fasta/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
+    output:
+        busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS"
+    container: c_R 
+    script:
+        "rules/Rscripts/Synteny_btw_haplo.R"
