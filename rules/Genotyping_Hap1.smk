@@ -23,7 +23,7 @@ rule MAPPING_EU_h1:
         I2 = "Data/Edulis/Keaton_EU_samples/{indiv}.2.trimmed.fastq.gz",
         ref= "Data/Edulis/Haplotype1_correct_names.fasta"
     output:
-        O1="Haplotype1_geno/MAPPING/{indiv}_mapping/{indiv}.bam.gz"
+        O1="Data/MAPPING/Haplotype1_geno/{indiv}_mapping/{indiv}.bam.gz"
     container: c_geno
     threads: 40
     shell:
@@ -43,9 +43,9 @@ rule MAPPING_EU_h1:
 
 rule Sorting_EU_h1:
     input:
-        O1="Haplotype1_geno/MAPPING/{indiv}_mapping/{indiv}.bam.gz"
+        O1="Data/MAPPING/Haplotype1_geno/{indiv}_mapping/{indiv}.bam.gz"
     output:
-        O2="Haplotype1_geno/MAPPING/{indiv}_mapping/{indiv}.sorted.duplicates.bam.gz"
+        O2="Data/MAPPING/Haplotype1_geno/{indiv}_mapping/{indiv}.sorted.duplicates.bam.gz"
     container: c_geno
     threads: 10
     shell:
@@ -76,10 +76,10 @@ rule Sorting_EU_h1:
 #### Variant Calling ### 
 rule Variant_calling_Haplotype_caller_EU_h1:
     input: 
-        I1="Haplotype1_geno/MAPPING/{indiv}_mapping/{indiv}.sorted.duplicates.bam.gz",
-        ref= "Data/Edulis/Haplotype1_correct_names.fasta"
+        I1="Data/MAPPING/Haplotype1_geno/{indiv}_mapping/{indiv}.sorted.duplicates.bam.gz",
+        ref= "Data/Edulis/Haplotype1.fasta"
     output: 
-        "Haplotype1_geno/Variant_Calling/{indiv}/{indiv}_gatk.vcf.gz"
+        "Data/Variant_Calling/Haplotype1_geno/{indiv}/{indiv}_gatk.vcf.gz"
     container: c_geno
     threads: 15
     shell:
@@ -100,9 +100,9 @@ rule Variant_calling_Haplotype_caller_EU_h1:
 
 rule make_scaffold_list_EU_h1:            # removing spaces in fasta seq names
     input:
-        ref="Data/Edulis/Haplotype1_correct_names.fasta"
+        ref="Data/Edulis/Haplotype1.fasta"
     output:
-        L="Haplotype1_geno/Scaffold_hap1.list"
+        L="Data/Scaffold_hap1.list"
     shell:
         """
         # Create .list file with chromosome names
@@ -112,12 +112,12 @@ rule make_scaffold_list_EU_h1:            # removing spaces in fasta seq names
 
 rule DB_import_EU_h1:
      input: 
-        vcf=expand( "Haplotype1_geno/Variant_Calling/{indiv}/{indiv}_gatk.vcf.gz", indiv=config['individuals_EU']),
-        Scaffold_list="Haplotype1_geno/Scaffold_hap1.list"
+        vcf=expand( "Data/Variant_Calling/Haplotype1_geno/{indiv}/{indiv}_gatk.vcf.gz", indiv=config['individuals_EU']),
+        Scaffold_list="Data/Scaffold_hap1.list"
      output: 
-        ghost_EU="Haplotype1_geno/Variant_Calling/ghost",
+        ghost_EU="Data/Variant_Calling/Haplotype1_geno/ghost",
         #ghost="Variant_Calling/DB/vcfheader.vcf",
-        DIR=directory("Haplotype1_geno/Variant_Calling/DB")
+        DIR=directory("Data/Variant_Calling/Haplotype1_geno/DB")
      container: c_geno
      threads: 15
      shell:
@@ -134,10 +134,10 @@ rule DB_import_EU_h1:
 
 rule GenotypeGVCF_EU_h1:
     input:
-        ghost_EU="Haplotype1_geno/Variant_Calling/ghost",
-        ref= "Data/Edulis/Haplotype1_correct_names.fasta"
+        ghost_EU="Data/Variant_Calling/Haplotype1_geno/ghost",
+        ref= "Data/Edulis/Haplotype1.fasta"
         #ghost="Variant_Calling/DB/vcfheader.vcf"
-    output: "Haplotype1_geno/Variant_Calling/EU_pop_all_site_unfiltered_h1.vcf.gz"
+    output: "Data/VCF/EU_pop_all_site_unfiltered_h1.vcf.gz"
     container: c_geno
     threads: 10
     shell:
@@ -152,9 +152,9 @@ rule GenotypeGVCF_EU_h1:
 
 rule Coverage_h1:
     input:
-        I1 ="Haplotype1_geno/Variant_Calling/EU_pop_all_site_unfiltered_h1.vcf.gz"
+        I1 ="Data/VCF/EU_pop_all_site_unfiltered_h1.vcf.gz"
     output:
-        H1_dp="Haplotype1_geno/dp_h1.tsv"
+        H1_dp="Results/dp_h1.tsv"
     container: c_popgen
     threads: 7
     shell:
