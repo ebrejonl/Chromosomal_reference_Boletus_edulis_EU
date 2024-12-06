@@ -4,8 +4,8 @@ rule edta_and_funannotate:
         genome="Data/Fasta/{genome}.fasta",
         cds="Data/Fasta/{genome}.cds.fasta",
     output:
-        soft_masked_genome="path/to/{genome}.softMasked.fasta",
-        funannotate_dir="path/to/Haplotype1_funannotate"
+        soft_masked_genome="Data/Fasta/{genome}.softMasked.fasta",
+        funannotate_dir="Data/Fasta/{genome}_funannotate"
     params:
         species="Boletus edulis",
         isolate="bielefeld_haplotype1",
@@ -19,10 +19,8 @@ rule edta_and_funannotate:
         """
         # Run EDTA
         EDTA.pl --genome {input.genome} --cds {input.cds} --anno 1 --threads {threads} --sensitive 1
-
         # Mask the genome using bedtools
         bedtools maskfasta -fi {input.genome} -soft -fo {output.soft_masked_genome} -bed {wildcards.genome}.mod.EDTA.TEanno.gff3
-
         # Run funannotate predict
         funannotate predict \
             -s "{params.species}" \
