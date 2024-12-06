@@ -14,7 +14,7 @@ This is a snakemake pipeline for all analysis, with software packaged in contain
 - [singularity/apptainer/Docker](https://apptainer.org/documentation/)
 - 
 
-The reference genome assembly can be found at PRJNA1187522 (available at publication)
+The reference genome assembly and newly generated short reads can be found at PRJNA1187522 (available at publication)
 
 #### To run the full pipeline, look at the snakemake_launcher.sh file
 
