@@ -3,7 +3,8 @@
 
 
 
-### This is the repository that accompanies the publication: A haplotype-resolved chromosomal reference genome for the porcini mushroom Boletus edulis (will add doi of preprint soon)
+### This is the repository that accompanies the publication: 
+#### A haplotype-resolved chromosomal reference genome for the porcini mushroom Boletus edulis (will add doi of preprint soon)
 
 This is a snakemake pipeline for all analysis, with software packaged in containers for reproducibility.
 
