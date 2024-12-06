@@ -18,10 +18,10 @@ rule geno_hap1:
 
 rule MAPPING_EU_h1:
     input:
-        index_ghost="Haplotype1_geno/index_ghost.txt",
+        index_ghost="Data/Fasta/Haplotype1_geno/index_ghost.txt",
         I1 = "Data/Fastq/{indiv}.1.trimmed.fastq.gz",
         I2 = "Data/Fastq/{indiv}.2.trimmed.fastq.gz",
-        ref= "Data/Edulis/Haplotype1.fasta"
+        ref= "Data/Fasta/Haplotype1.fasta"
     output:
         O1="Data/MAPPING/Haplotype1_geno/{indiv}_mapping/{indiv}.bam.gz"
     container: c_geno
@@ -77,7 +77,7 @@ rule Sorting_EU_h1:
 rule Variant_calling_Haplotype_caller_EU_h1:
     input: 
         I1="Data/MAPPING/Haplotype1_geno/{indiv}_mapping/{indiv}.sorted.duplicates.bam.gz",
-        ref= "Data/Edulis/Haplotype1.fasta"
+        ref= "Data/Fasta/Haplotype1.fasta"
     output: 
         "Data/Variant_Calling/Haplotype1_geno/{indiv}/{indiv}_gatk.vcf.gz"
     container: c_geno
@@ -100,7 +100,7 @@ rule Variant_calling_Haplotype_caller_EU_h1:
 
 rule make_scaffold_list_EU_h1:            # removing spaces in fasta seq names
     input:
-        ref="Data/Edulis/Haplotype1.fasta"
+        ref="Data/Fasta/Haplotype1.fasta"
     output:
         L="Data/Scaffold_hap1.list"
     shell:
@@ -135,7 +135,7 @@ rule DB_import_EU_h1:
 rule GenotypeGVCF_EU_h1:
     input:
         ghost_EU="Data/Variant_Calling/Haplotype1_geno/ghost",
-        ref= "Data/Edulis/Haplotype1.fasta"
+        ref= "Data/Fasta/Haplotype1.fasta"
         #ghost="Variant_Calling/DB/vcfheader.vcf"
     output: "Data/VCF/EU_pop_all_site_unfiltered_h1.vcf.gz"
     container: c_geno

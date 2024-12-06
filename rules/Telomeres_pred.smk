@@ -1,6 +1,6 @@
 rule Telomeres:
     input:
-        fasta = "../Haplotype2_renamed_reordered_Chr_only.fasta"
+        fasta = "Data/Ref/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
     output:
         "Data/Annotation/TELO_telomeric_repeat_windows.tsv"
     container: c_synteny 
