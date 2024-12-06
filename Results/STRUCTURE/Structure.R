@@ -3,6 +3,11 @@ library(vcfR)
 library(pcadapt)
 library(jtools)
 library(ggrepel)
+library(maps)
+library(sf)
+library(rnaturalearth)
+library(ggforce)
+library(MetBrewer)
 
 
 # Part 1) METADATA
@@ -10,12 +15,7 @@ setwd("~/Desktop/work/Dropbox/Reference_genome_21_02_2024/Proper_Chromosome_name
 metadata=read.csv("EU_metadata.csv", header=F, sep=",") |> mutate(lon=as.numeric(paste0(paste0(V5, "."), V6))) |> select(-V5, -V6) |> 
     rename(ID=V2, Pop=V7,
   lat=V4) |>  mutate(lat=as.numeric(lat))
-  
-  library(maps)
-  library(sf)
-  library(rnaturalearth)
-  library(ggforce)
-  library(MetBrewer)
+
 
 # Part 2) genomic PCA
 setwd("~/Desktop/work/Dropbox/Reference_genome_21_02_2024/14_11/Chromosomal_reference_Boletus_edulis_EU/")
@@ -41,7 +41,7 @@ lat=as.numeric(lat))
 print("merged")
 
 PEV
-#PEV "5%"   "3.4%" "3.1%" "2.7%" "2.6%"
+#PEV = "5%"   "3.4%" "3.1%" "2.7%" "2.6%"
 scores =scores|> dplyr::rename("5%"=X1,
               "3.4%"=X2,
             "3.1%"=X3,"2.7%"=X4)
