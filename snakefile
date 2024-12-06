@@ -7,6 +7,7 @@ import os
 c_geno = config[ 'sif_genotyping' ] # for short
 c_popgen = config['sif_popgen']
 c_synteny = config['sif_synteny']
+c_R = config['sifR']
 
 rule all:
     input:
@@ -17,6 +18,7 @@ rule all:
         "Results/Busco/busco_ghost.txt",
         "Results/STRUCTURE/Whole_genomefiltered.vcf.gz",
         "Data/Annotation/TELO_telomeric_repeat_windows.tsv",
+        "Data/Variant_Calling/Haplotype2_geno/ghost",
         "Results/dp_h1.tsv",
         "Karyotype_plot.pdf",
         "Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai"
