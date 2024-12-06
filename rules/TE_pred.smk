@@ -1,5 +1,6 @@
+# This prediction was made by Tremble K github://
+# added post-hoc as rule to the snakemake pipeline for consistency
 rule TE_pred:
-rule edta_and_funannotate:
     input:
         genome="Data/Fasta/{genome}.fasta",
         cds="Data/Fasta/{genome}.cds.fasta",
@@ -13,8 +14,7 @@ rule edta_and_funannotate:
         busco_db="basidiomycota",
         funannotate_db="~/work_programs/funannotate_db_22april24/"
     threads: 32
-    conda:
-        "path/to/your_conda_env.yaml"
+    container: c_synteny
     shell:
         """
         # Run EDTA
