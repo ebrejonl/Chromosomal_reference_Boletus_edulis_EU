@@ -6,7 +6,7 @@
 ### This is the repository that accompanies the publication: 
 #### A haplotype-resolved chromosomal reference genome for the porcini mushroom Boletus edulis (will add doi of preprint soon)
 
-This is a snakemake pipeline for all analysis, with software packaged in containers for reproducibility.
+This is a snakemake pipeline for all analysis, with software packaged in containers with conda/mamba for reproducibility.
 
 #### to run the pipeline, you need the following:
 - [Snakemake](https://snakemake.readthedocs.io)
@@ -21,8 +21,6 @@ The reference genome assembly and newly generated short reads can be found at PR
 
 
 
-
-#### Individual steps can be found in the rules folder in their .smk files
 
 
 
