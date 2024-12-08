@@ -14,6 +14,21 @@ rule PCA_prep_EU_indiv:
            --minDP 5 --maxDP 100 --recode --stdout | bgzip -c > {output.wgs_full}
         """
 
+
+rule PCA_map:
+    input: wgs_full="Results/STRUCTURE/Whole_genomefiltered.vcf.gz"
+    output: pca= "Results/STRUCTURE/Whole_genome_pca_with_pop.rds"
+    threads: 20
+    container: c_R
+    script:
+        "Structure.R"
+
+
+
+
+
+
+
 # Nucleotide diversity pi 
 rule pi_per_pop:
     input:
@@ -32,8 +47,9 @@ rule pi_per_pop:
             {params.indivs} \
             --minDP 5 --maxDP 100 --max-missing 0.8 \
             --window-pi 10000 --window-pi-step 1000 --stdout > {output.Pi}
-        touch {output.ghost_pi}
+        cat "ghost for next rule" > {output.ghost_pi}       
        """ 
+
 
 
 rule plotting_Structure:

@@ -2,11 +2,11 @@ library(tidyverse)
 library(purrr)
 library(here)
 
-
-Central= read_tsv("PI_Central.windowed.pi", col_names = T) |> mutate(pop = "Central")
-Fenno=read_tsv("PI_Fennoscandia.windowed.pi", col_names =T ) |> mutate(pop ="Fennoscandia")
-Great_Britain= read_tsv("PI_Great_Britain.windowed.pi",col_names = T ) |> mutate(pop ="United Kingdom")
-Iceland =read_tsv("PI_Iceland.windowed.pi", col_names  =T )  |> mutate(pop ="Iceland")
+ghost_file <- snakemake@input[['ghost_pi']]
+Central= read_tsv("Results/DIVERSITY/PI_Central.windowed.pi", col_names = T) |> mutate(pop = "Central")
+Fenno=read_tsv("Results/DIVERSITY/PI_Fennoscandia.windowed.pi", col_names =T ) |> mutate(pop ="Fennoscandia")
+Great_Britain= read_tsv("Results/DIVERSITY/PI_Great_Britain.windowed.pi",col_names = T ) |> mutate(pop ="United Kingdom")
+Iceland =read_tsv("Results/DIVERSITY/PI_Iceland.windowed.pi", col_names  =T )  |> mutate(pop ="Iceland")
 
 full=rbind(Central,Fenno, Great_Britain, Iceland )
 
@@ -22,7 +22,7 @@ read_fai <- \(file){
                           idx%%2,
                           2)) }
 
-Hap_2_indec <- read_fai(file="../Haplotype2_renamed_reordered_Chr_only.fasta.fai")  %>% 
+Hap_2_indec <- read_fai(file="Data/Fasta/Haplotype2_renamed_reordered_Chr_only.fasta.fai")  %>% 
   mutate(Haplotype = "2")%>%
   rename("CHROM"="name") 
 
@@ -56,12 +56,12 @@ PI_plot=ggplot(fullfai) +
 axis.ticks.y.left = element_blank()) + theme(axis.text.x.top = element_text(size=11, color="black"),
 axis.text.x.bottom = element_text(size=11, color="black"))
 
-PI_plot
+#PI_plot#
 
-saveRDS(file="PI_plot.rds", PI_plot)
-
-ggsave(PI_plot, file="Pi_plot.pdf", width = 8, height = 5)
-
+##saveRDS(file="PI_plot.rds", PI_plot)
+##
+#ggsave(PI_plot, file="Pi_plot.pdf", width = 8, height = 5)
+#
 
 library(patchwork)
 library(jtools)
@@ -108,8 +108,8 @@ PI_plotb=ggplot(fullfai) +
 
 pi_full=box + PI_plot + plot_layout(widths=c(.1,.9))
 pi_full
-saveRDS(pi_full, file="pi_full.rds")
-ggsave(pi_full,filename = "pi_full.pdf", device=cairo_pdf, width = 10, height = 10)
+#saveRDS(pi_full, file="pi_full.rds")
+#ggsave(pi_full,filename = "pi_full.pdf", device=cairo_pdf, width = 10, height = 10)
 
 library(maps)
 library(sf)
