@@ -1,4 +1,6 @@
-### Structure analysis 
+### Structure analysis ###
+
+# 1) Principal component analysis
 rule PCA_prep_EU_indiv:
     input:
         "Data/VCF/EU_pop_all_site_unfiltered.vcf.gz" 
@@ -14,22 +16,17 @@ rule PCA_prep_EU_indiv:
            --minDP 5 --maxDP 100 --recode --stdout | bgzip -c > {output.wgs_full}
         """
 
-
 rule PCA_map:
     input: wgs_full="Results/STRUCTURE/Whole_genomefiltered.vcf.gz"
     output: pca= "Results/STRUCTURE/Whole_genome_pca_with_pop.rds"
     threads: 20
     container: c_R
     script:
-        "Structure.R"
+        "rules/Rscripts/Structure.R"
 
 
 
-
-
-
-
-# Nucleotide diversity pi 
+# 2) Nucleotide diversity pi (+ Figure 4 plot)
 rule pi_per_pop:
     input:
         vcf="Data/VCF/EU_pop_all_site_unfiltered.vcf.gz"
@@ -59,4 +56,4 @@ rule plotting_Structure:
         Structure_plot="Figure4_4Dec.pdf"
     container: c_R
     script:
-       "Plotting_Structure_pi.R"
+       "rules/Rscripts/Plotting_Structure_pi.R"

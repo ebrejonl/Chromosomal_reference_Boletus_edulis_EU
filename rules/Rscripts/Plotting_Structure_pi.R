@@ -56,12 +56,6 @@ PI_plot=ggplot(fullfai) +
 axis.ticks.y.left = element_blank()) + theme(axis.text.x.top = element_text(size=11, color="black"),
 axis.text.x.bottom = element_text(size=11, color="black"))
 
-#PI_plot#
-
-##saveRDS(file="PI_plot.rds", PI_plot)
-##
-#ggsave(PI_plot, file="Pi_plot.pdf", width = 8, height = 5)
-#
 
 library(patchwork)
 library(jtools)
@@ -107,9 +101,8 @@ PI_plotb=ggplot(fullfai) +
  xlab("Genomic position")+ ylab("PI")
 
 pi_full=box + PI_plot + plot_layout(widths=c(.1,.9))
-pi_full
-#saveRDS(pi_full, file="pi_full.rds")
-#ggsave(pi_full,filename = "pi_full.pdf", device=cairo_pdf, width = 10, height = 10)
+
+## adding PCA
 
 library(maps)
 library(sf)
@@ -125,9 +118,7 @@ library(ggforce)
 #3b2a1e (dark brown)
 #1e1e1e (almost black)
 
-ghost=read.csv()
 mydata=readRDS("Results/STRUCTURE/Whole_genome_pca_with_pop.rds") |> 
-#mydata=readRDS("../MAKE_ALL_FIGURES/Whole_genome_pca_with_pop_Dec4.rds") |> 
   mutate(Pop=case_when(
     Pop=="Scandinavia" ~ "Fennoscandia", 
     Pop=="South" ~ "Southern EU",
@@ -187,6 +178,6 @@ p2=ggplot(data = worldmap) + geom_sf(data = worldmap) +
   pppp= ppp/ pi_full + 
     plot_layout(guides = "collect", heights = c(.5,.6))
 
-pppp
+#pppp
 
 ggsave(pppp, file="Figure4_4Dec.pdf",device = cairo_pdf, width = 11, height = 12)

@@ -8,23 +8,21 @@ library(sf)
 library(rnaturalearth)
 library(ggforce)
 library(MetBrewer)
+library(here)
 
 # Part 1) METADATA
-setwd("~/Desktop/work/Dropbox/Reference_genome_21_02_2024/Proper_Chromosome_names/Chromosome3/")
 metadata=read.csv("EU_metadata.csv", header=F, sep=",") |> mutate(lon=as.numeric(paste0(paste0(V5, "."), V6))) |> select(-V5, -V6) |> 
     rename(ID=V2, Pop=V7,
   lat=V4) |>  mutate(lat=as.numeric(lat))
 
 # Part 2) genomic PCA
-setwd("~/Desktop/work/Dropbox/Reference_genome_21_02_2024/14_11/Chromosomal_reference_Boletus_edulis_EU/")
-wgs_full
 pca_vcf <- read.vcfR("snakemake@input[['wgs_full']]")
 print("VCF loaded")
 vecteur_noms<-c(names(pca_vcf@gt[1,]))
 vecteur_noms<-vecteur_noms[-1] # remove format
 # names loaded
 #create pcadapt object and add ID from VCF -> with pcadapt
-respca_10_maf = pcadapt(input = read.pcadapt("Results/STRUCTURE/Whole_genomefiltered.vcf.gz", type = "vcf") ,K = 5) # maf à choisir , min.maf=0.08
+respca_10_maf = pcadapt(input = read.pcadapt("snakemake@input[['wgs_full']]", type = "vcf") ,K = 5)
 scores = data.frame(respca_10_maf$scores)
 rownames(scores)= vecteur_noms
 
