@@ -11,20 +11,20 @@ c_R = config['sifR']
 
 rule all:
     input:
-        "Results/juicer/chrom.sizes",
-        "Results/juicer/aligned_reads.bam",
-        "Data/VCF/EU_pop_all_site_unfiltered.vcf.gz",
-        "Results/juicer/contact_map.hic",
-        "Results/Busco/busco_ghost.txt",
-        "Results/STRUCTURE/Whole_genomefiltered.vcf.gz",
-        "Data/Annotation/TELO_telomeric_repeat_windows.tsv",
-        "Data/Variant_Calling/Haplotype2_geno/ghost",
-        "Results/dp_h1.tsv",
+        #"Results/juicer/chrom.sizes",
+        #"Results/juicer/aligned_reads.bam",
+        #"Data/VCF/EU_pop_all_site_unfiltered.vcf.gz",
+        #"Results/juicer/contact_map.hic",
+        #"Results/Busco/busco_ghost.txt",
+        #"Results/STRUCTURE/Whole_genomefiltered.vcf.gz",
+        #"Data/Annotation/TELO_telomeric_repeat_windows.tsv",
+        #"Data/Variant_Calling/Haplotype2_geno/ghost",
+        #"Results/dp_h1.tsv",
         "Karyotype_plot.pdf",
-        "Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai",
+        #"Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai",
         "Figure4_4Dec.pdf",
-        "Results/Busco/Synteny_haplotypes_busco.RDS",
-        "Results/Busco/Synteny_haplotypes_busco.RDS"
+        #"Results/Busco/Synteny_haplotypes_busco.RDS",
+        "Figure1.pdf"
 
 
 

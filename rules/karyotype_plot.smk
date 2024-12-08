@@ -16,6 +16,7 @@ rule Annotation_files_gather:
 # Gene mapping in R for Figure 3
 rule Karyotype_plot:
     input:
+        Telomeres="Data/Annotation/TELO_telomeric_repeat_windows.tsv",
         hap2_index="Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai",
         Caz_coor="Data/Annotation/Cazymes.tsv",
         dummy="Data/Annotation/annotation_complete.txt"
