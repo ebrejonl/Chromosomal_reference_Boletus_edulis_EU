@@ -41,7 +41,6 @@ rule Hap_synteny:
 
 rule Gene_TE_hap1_vs_hap2:
     input:
-        busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS",
         gff=expand("Data/Fasta/{genome}.fasta.mod.EDTA.TEanno.gff3", genome=config["genomes"])
     output:
         te1="Results/Pgenes.RDS",
