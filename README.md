@@ -16,7 +16,8 @@ This is a snakemake pipeline for all analysis, with software packaged in contain
 
 The reference genome assembly and newly generated short reads can be found at PRJNA1187522 (available at publication)
 
-#### To run the full pipeline, look at the snakemake_launcher.sh file
+#### The entire pipeline looks like this:
+![Alt text](./workflow_dag.png "Workflow DAG")
 
 
 
