@@ -64,9 +64,9 @@ rule Plotting_hap1vshap2:
     input:
         te1="Results/Pgenes.RDS",
         te2="Results/Teplot.RDS",
-        te3="Results/model_gene.RDS"
+        te3="Results/model_gene.RDS",
         busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS",
-        Coverage= "Results/Coverage_h1.RDS"
+        Coverage= "Results/Coverage_h1.RDS",
         fai="Data/Fasta/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
     output:
         Fig1="Figure1.pdf"
