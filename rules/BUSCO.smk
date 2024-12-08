@@ -52,12 +52,24 @@ rule Gene_TE_hap1_vs_hap2:
         "rules/Rscripts/Gene_comp.R"
 
 
+rule Coveverage_R:
+    input: H1_dp="Results/dp_h1.tsv"
+    output: Coverage= "Results/Coverage_h1.RDS"
+    container: c_R 
+    script:
+        "rules/Rscripts/Coverage_h1.R"
+
+
 rule Plotting_hap1vshap2:
     input:
+        te1="Results/Pgenes.RDS",
+        te2="Results/Teplot.RDS",
+        te3="Results/model_gene.RDS"
         busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS",
+        Coverage= "Results/Coverage_h1.RDS"
         fai="Data/Fasta/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
     output:
-        busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS"
+        Fig1="Figure1.pdf"
     container: c_R 
     script:
         "rules/Rscripts/Synteny_btw_haplo.R"
