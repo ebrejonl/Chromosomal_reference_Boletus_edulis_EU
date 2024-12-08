@@ -2,13 +2,22 @@ library(tidyverse)
 library(purrr)
 library(here)
 
-ghost_file <- snakemake@input[['ghost_pi']]
-Central= read_tsv("Results/DIVERSITY/PI_Central.windowed.pi", col_names = T) |> mutate(pop = "Central")
-Fenno=read_tsv("Results/DIVERSITY/PI_Fennoscandia.windowed.pi", col_names =T ) |> mutate(pop ="Fennoscandia")
-Great_Britain= read_tsv("Results/DIVERSITY/PI_Great_Britain.windowed.pi",col_names = T ) |> mutate(pop ="United Kingdom")
-Iceland =read_tsv("Results/DIVERSITY/PI_Iceland.windowed.pi", col_names  =T )  |> mutate(pop ="Iceland")
+# Snakemake version 
+inputs <- snakemake@input[['pi_files']]
+data_list <- lapply(inputs$pi_files, function(file) {
+  pop_name <- str_extract(file, "PI_(.*?)\\.windowed\\.pi") %>%
+    str_replace("PI_", "")
+    read_tsv(file, col_names = TRUE) %>%
+    mutate(pop = pop_name)
+})
+full<- bind_rows(data_list)
 
-full=rbind(Central,Fenno, Great_Britain, Iceland )
+# regular version 
+#Central= read_tsv("Results/DIVERSITY/PI_Central.windowed.pi", col_names = T) |> mutate(pop = "Central")
+#Fenno=read_tsv("Results/DIVERSITY/PI_Fennoscandia.windowed.pi", col_names =T ) |> mutate(pop ="Fennoscandia")
+#Great_Britain= read_tsv("Results/DIVERSITY/PI_Great_Britain.windowed.pi",col_names = T ) |> mutate(pop ="United Kingdom")
+#Iceland =read_tsv("Results/DIVERSITY/PI_Iceland.windowed.pi", col_names  =T )  |> mutate(pop ="Iceland")
+#full=rbind(Central,Fenno, Great_Britain, Iceland )
 
 read_fai <- \(file){
   read_tsv(file,
@@ -118,7 +127,7 @@ library(ggforce)
 #3b2a1e (dark brown)
 #1e1e1e (almost black)
 
-mydata=readRDS("Results/STRUCTURE/Whole_genome_pca_with_pop.rds") |> 
+mydata=readRDS("snakemake@input[['pca']]") |> 
   mutate(Pop=case_when(
     Pop=="Scandinavia" ~ "Fennoscandia", 
     Pop=="South" ~ "Southern EU",

@@ -3,6 +3,7 @@ library(tidyverse)
 library(data.table)
 library(here)
 
+dummy_files <- snakemake@input[['dummy']]
 
 read_fai <- \(file){
   read_tsv(file,

@@ -21,7 +21,8 @@ rule all:
         "Data/Variant_Calling/Haplotype2_geno/ghost",
         "Results/dp_h1.tsv",
         "Karyotype_plot.pdf",
-        "Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai"
+        "Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai",
+        "Figure4_4Dec.pdf"
 
 
 
