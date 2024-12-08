@@ -22,7 +22,9 @@ rule all:
         "Results/dp_h1.tsv",
         "Karyotype_plot.pdf",
         "Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai",
-        "Figure4_4Dec.pdf"
+        "Figure4_4Dec.pdf",
+        "Results/Busco/Synteny_haplotypes_busco.RDS",
+        "Results/Busco/Synteny_haplotypes_busco.RDS"
 
 
 

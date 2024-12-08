@@ -6,7 +6,8 @@ rule TE_pred:
         cds="Data/Fasta/{genome}.cds.fasta",
     output:
         soft_masked_genome="Data/Fasta/{genome}.softMasked.fasta",
-        funannotate_dir="Data/Fasta/{genome}_funannotate"
+        funannotate_dir="Data/Fasta/{genome}_funannotate",
+        gff="Data/Fasta/{genome}.fasta.mod.EDTA.TEanno.gff3"
     params:
         species="Boletus edulis",
         isolate="bielefeld_haplotype1",

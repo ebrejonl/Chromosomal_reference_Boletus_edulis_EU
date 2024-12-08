@@ -28,8 +28,9 @@ busco -i {input.fasta2} \
         """
 
 
-rule plotBusco:
+rule Hap_synteny:
     input:
+        ghost_busco="Results/Busco/busco_ghost.txt",
         fai="Data/Fasta/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
     output:
         busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS"
@@ -37,8 +38,23 @@ rule plotBusco:
     script:
         "rules/Rscripts/Synteny_btw_haplo.R"
 
-rule Gene_TE_comp:
+
+rule Gene_TE_hap1_vs_hap2:
     input:
+        busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS",
+        gff=expand("Data/Fasta/{genome}.fasta.mod.EDTA.TEanno.gff3", genome=config["genomes"])
+    output:
+        te1="Results/Pgenes.RDS",
+        te2="Results/Teplot.RDS",
+        te3="Results/model_gene.RDS"
+    container: c_R 
+    script:
+        "rules/Rscripts/Gene_comp.R"
+
+
+rule Plotting_hap1vshap2:
+    input:
+        busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS",
         fai="Data/Fasta/Haplotype2_renamed_reordered_Chr_only.fasta.fai"
     output:
         busco_plot="Results/Busco/Synteny_haplotypes_busco.RDS"
