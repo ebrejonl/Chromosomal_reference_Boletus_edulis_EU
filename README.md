@@ -11,7 +11,7 @@ This is a snakemake pipeline for all analysis, with software packaged in contain
 #### to run the pipeline, you need the following:
 - [Snakemake](https://snakemake.readthedocs.io)
 - a cluster system like [slurm](https://slurm.schedmd.com/documentation.html)
-- [singularity/apptainer/Docker](https://apptainer.org/documentation/)
+- [singularity/apptainer](https://apptainer.org/documentation/)/Docker
 
 
 The reference genome assembly and newly generated short reads can be found at PRJNA1187522 (available at publication)
