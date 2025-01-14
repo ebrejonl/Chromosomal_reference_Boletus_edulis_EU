@@ -130,3 +130,58 @@ supp_centromeres=p |>
 supp_centromeres
 
 ggsave(supp_centromeres, file = "Supplementary_figure_centromeres.pdf", width = 12, height = 8)
+
+## through AT content?
+library(dtplyr)
+library(genomalicious)
+gc()
+df=vcf2DT(vcfFile="Results/STRUCTURE/Whole_genomefiltered.vcf.gz", dropCols = NULL, keepComments = FALSE, keepInfo = FALSE)
+## careful with sites with more than 2 alleles, need to load the genotype file drom vcftools too and compare
+head(df, n=10)
+df= df |> lazy_dt() |> filter(!GT=="./.") |> as.data.table()
+df$GTs="Na"
+
+# GTs in geno format 
+df[, GTs := fcase( GT %in% c("0|0", "0/0"), "0",
+                   GT %in% c("1|0", "1/0", "0|1", "0/1"), "1",
+                   GT %in% c("1|1", "1/1"), "2", default = "9")]
+
+df_wide= df  |> lazy_dt() |> 
+          pivot_wider(
+            names_from = SAMPLE,
+            values_from = GTs,
+            id_cols = c(LOCUS, REF, ALT, CHROM, POS)) |> as.data.table() 
+
+head(df_wide, n = 10)
+
+
+## calculate AT content per 100 bp windows 
+
+# initiate windows taking chroms into account
+df_wide[, start := floor((POS - 1) / 100) * 100 + 1, by = CHROM]
+df_wide[, end := start + 99, by = CHROM]
+
+# Calculate AT content 
+df_wide[, AT_count := (grepl("A|T", REF, ignore.case = TRUE) +
+                        grepl("A|T", ALT, ignore.case = TRUE))]
+
+df_wide %>% head()
+
+AT_summary =df_wide |> lazy_dt() |> group_by(CHROM, start) |> summarise(AT=sum(AT_count)) |> as.data.table()
+
+AT_summary$CHROM <- gsub("^C", "c", AT_summary$CHROM)
+
+AT <- AT_summary |> lazy_dt() |> rename(chromosome1=CHROM) |> left_join(ql) |> 
+  mutate(
+    centro = case_when(
+      start > Centromere - 2000 & start < Centromere + 2000 ~ "centro",
+      TRUE ~ "other")) |> 
+  as_tibble() |> 
+  #filter(AT>50) |> 
+ggplot(aes(x = start/1000000, y = AT, fill=centro, color=centro )) + geom_point(alpha=0.5, size = 1.5, shape=21) +
+  geom_segment(aes(x=Centromere/1000000, y=-Inf, xend =Centromere/1000000, yend = Inf), color="red", alpha=0.15)+
+  scale_fill_manual(values = c("#9999CC","#FF9933")) +
+  scale_color_manual(values = c("#9999CC","#FF9933"))+
+    facet_wrap(~chromosome1, ncol=5)
+
+ggsave("AT_summary.pdf", plot = AT, width=12, height = 6)
