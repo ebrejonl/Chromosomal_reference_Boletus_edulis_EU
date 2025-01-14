@@ -40,9 +40,34 @@ all_hic_data |> filter(log_counts>10) |>
 library(zoo)
 p=all_hic_data |> filter(log_counts>10) |> 
   group_by(chromosome1) |> 
-  mutate(roll_c=rollmean(log_counts, k = 45, align="center", na.pad = TRUE))
+  mutate(roll_c=rollmean(log_counts, k = 40, align="center", na.pad = TRUE))
 
 p |> ggplot()+
   geom_point(aes(x = y, y = log_counts))+
   facet_wrap(~chromosome1)+
   geom_line(aes(x = y,y = roll_c), color ='red', linewidth=1.5)
+
+# per chromosome
+p |> filter(chromosome1=="chr1") |> 
+  ggplot()+ 
+  geom_point(aes(x = y, y = log_counts)) +
+  geom_line(aes(x = y,y = roll_c), color ='red', linewidth=1.5) +
+  geom_vline(xintercept = 1000000)
+
+p |> filter(chromosome1=="chr2") |> 
+  ggplot()+ 
+  geom_point(aes(x = y, y = log_counts)) +
+  geom_line(aes(x = y,y = roll_c), color ='red', linewidth=1.5) +
+  geom_vline(xintercept = 1800000)
+
+p |> filter(chromosome1=="chr3") |> 
+  ggplot()+ 
+  geom_point(aes(x = y, y = log_counts)) +
+  geom_line(aes(x = y,y = roll_c), color ='red', linewidth=1.5) +
+  geom_vline(xintercept = 2750000)
+
+p |> filter(chromosome1=="chr4") |> 
+  ggplot()+ 
+  geom_point(aes(x = y, y = log_counts)) +
+  geom_line(aes(x = y,y = roll_c), color ='red', linewidth=1.5) +
+  geom_vline(xintercept = 2750000)
