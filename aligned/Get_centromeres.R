@@ -33,7 +33,16 @@ all_hic_data <- all_hic_data %>%
 mutate(log_counts = log2(counts + 1)) |> 
     filter(as.numeric(str_sub(chromosome1,4,5)) <= as.numeric(str_sub(chromosome2,4,5)) )
 
-all_hic_data |> #filter(counts>1000) |> 
-  ggplot(aes(x=x, y=log_counts ))+
+all_hic_data |> filter(log_counts>10) |> 
+  ggplot(aes(x=y, y=log_counts ))+
   geom_point()+ 
   facet_wrap(~chromosome1)
+library(zoo)
+p=all_hic_data |> filter(log_counts>10) |> 
+  group_by(chromosome1) |> 
+  mutate(roll_c=rollmean(log_counts, k = 45, align="center", na.pad = TRUE))
+
+p |> ggplot()+
+  geom_point(aes(x = y, y = log_counts))+
+  facet_wrap(~chromosome1)+
+  geom_line(aes(x = y,y = roll_c), color ='red', linewidth=1.5)
