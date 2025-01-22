@@ -239,13 +239,99 @@ AT= result[,3:5] %>% #as.data.table() |> lazy_dt()  %>%
   group_by(seqnames, window) |> 
   summarize(start=min(start),
             end=max(end),
-            ATcontent = sum(AT),
+            ATsum= sum(AT),
+            unique_pos=length(unique(.$positions)),
             .groups = 'drop') %>%
-              mutate(midpoint = (start + end) / 2) %>%
+              mutate(midpoint = (start + end) / 2,
+          ATcontent=ATsum/unique_pos) %>%
               select(chromosomes = seqnames, start, end,  ATcontent, midpoint) |> as.data.table()
 
+# AT= result[,3:5] %>% 
+#   lazy_dt() %>%
+#   {GRanges(seqnames=.$chromosomes,
+#            ranges=IRanges(start = .$positions, end=.$positions), 
+#            AT=.$A_T_count, positions=.$positions)} |>
+#   as.data.table() |> 
+#   lazy_dt() %>%
+#   group_by(seqnames) |>
+#   mutate(window=floor((start-1)/(window_size - window_step))) |>
+#   mutate(end=start + window_size - 1) |>
+#   group_by(seqnames, window) |>
+#   summarize(start=min(start),
+#            end=max(end),
+#            ATcontent = sum(AT)/n_distinct(positions),  # Count unique positions in window
+#            .groups = 'drop') %>%
+#   mutate(midpoint = (start + end) / 2) %>%
+#   select(chromosomes = seqnames, start, end, ATcontent, midpoint) |> 
+#   as.data.table()
 
-  
+AT=result[,3:5] %>% 
+  as.data.table() %>%  # Convert to data.table first
+  lazy_dt() %>%
+  mutate(window=floor((positions-1)/(window_size - window_step))) %>%
+  group_by(chromosomes, window) %>%
+  summarize(start=min(positions),
+           end=max(positions),
+           ATcontent = sum(A_T_count)/n_distinct(positions),
+           Npos=n_distinct(positions),
+           A_T_count=A_T_count,
+           .groups = 'drop') %>%
+  mutate(midpoint = (start + end) / 2) %>%
+  select(chromosomes, start, end, ATcontent, midpoint,Npos,A_T_count) |> 
+  as.data.table()
+
+AT |> head()
+
+# centromere specific
+ATc=AT |> group_by(chromosomes, midpoint) |> summarise(AT=sum(A_T_count/Npos))
+ATc = ATc|> left_join(regions, by="chromosomes") |> 
+  mutate(startC=as.numeric(startC),
+          endC=as.numeric(endC))
+# closest
+ATs=ATc %>%
+  group_by(chromosomes) %>%
+  mutate(targetMidpoint = (startC + endC)/2,
+         closestMidpoint = midpoint[which.min(abs(midpoint - ((startC + endC)/2)))]) %>%
+  ungroup()
+ATs |> group_by(chromosomes) |> filter(midpoint==closestMidpoint)
+
+# 3 closest
+ATs=ATc %>%
+  group_by(chromosomes) %>%
+  mutate(targetMidpoint = (startC + endC)/2,
+         closestMidpoints1 = midpoint[order(abs(midpoint - ((startC + endC)/2)))[1]] ,
+        closestMidpoints2 = midpoint[order(abs(midpoint - ((startC + endC)/2)))[2]] ,
+          closestMidpoints3 = midpoint[order(abs(midpoint - ((startC + endC)/2)))[3]]) %>%
+  ungroup()
+
+ATonly= ATs  |> group_by(chromosomes) |> filter(midpoint==closestMidpoints1|
+  midpoint==closestMidpoints2|
+  midpoint==closestMidpoints3)
+
+# others
+ATsothers=ATc |> left_join(ATs) |> group_by(chromosomes) |> filter(!midpoint==closestMidpoints1&
+                                      !midpoint==closestMidpoints2&
+                                      !midpoint==closestMidpoints3)
+gc()
+ggplot(ATsothers)+
+  geom_boxplot(ATsothers,mapping=aes(y=AT,x="Rest of chr"), outliers=F)+
+  geom_boxplot(ATonly,mapping=aes(y=AT,x="Centromere"), outliers=F)+
+  facet_wrap(~chromosomes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 library(ggrastr)
 library(ggpubr)
 AT = AT |> left_join(regions, by="chromosomes") |> 
