@@ -114,3 +114,84 @@ p=ggplot(results)+ rasterize(
   facet_wrap(~Chromosome, scales = "free_x")
 p
 
+
+
+
+######~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~########
+Centro=data.frame(results |> select(Chromosome, startC, endC)  |> filter(!duplicated(Chromosome)))
+
+regions <- data.frame(
+  Chromosome = factor(paste0("chr", 1:11), levels = paste0("chr", 1:11)),
+  startC = as.numeric(c(1099000, 1799000, 2749000, 2199000, 2049000, 1149000, 1349000, 1399000, 1249000, 2399000, 1599000)),
+  endC = as.numeric(c(1101000, 1801000, 2751000, 2201000, 2051000, 1151000, 1351000, 1401000, 1251000, 2401000, 1601000))
+)
+
+combined_data <- bind_rows(
+  results %>% 
+    mutate(
+      type = "AT Content", 
+      value = AT_Content, 
+      Chromosome = factor(Chromosome, levels = paste0("chr", 1:11))
+    ),
+  all_hic_data %>% 
+    filter(log_counts > 10) %>%
+    mutate(
+      type = "Hi-C Counts", 
+      value = log_counts, 
+      Position = x,
+      Chromosome = factor(chromosome1, levels = paste0("chr", 1:11))
+    ) |> left_join(Centro) |>   mutate(Chromosome = factor(Chromosome, levels = paste0("chr", c(1:5, 6:11))))
+)
+
+first_chroms <- paste0("chr", 1:5)
+second_chroms <- factor(paste0("chr", 6:11), levels=paste0("chr", 6:11))
+
+custom_labeller <- as_labeller(c(
+  "AT Content" = "AT content (%)", 
+  "Hi-C Counts" = "Hi-C interactions\n (>10 only)",
+  "chr1" = "Chr1",
+  "chr2" = "Chr2",
+  "chr3" = "Chr3",
+  "chr4" = "Chr4",
+  "chr5" = "Chr5",
+  "chr6" = "Chr6",
+  "chr7" = "Chr7",
+  "chr8" = "Chr8",
+  "chr9" = "Chr9",
+  "chr10" = "Chr10",
+  "chr11" = "Chr11"))
+
+p_first <- ggplot(combined_data %>% filter(Chromosome %in% first_chroms), 
+                  aes(x = Position, y = value)) +
+  rasterize(geom_point(aes(color = type), alpha = 0.6, size = 2)) +
+  geom_rect(aes(xmin = startC, xmax = endC, ymin = -Inf, ymax = Inf), 
+            color = "red", linewidth = 0.1, fill = "transparent") +
+  facet_grid(rows = vars(type), cols = vars(Chromosome), scales = "free_y",
+labeller = custom_labeller) +
+  scale_color_manual(values = c("steelblue", "black")) +
+  theme_minimal() +
+  labs(x = "", y = "", title = "") +
+  theme(strip.text.y = element_text(angle = 0, size=20),
+strip.text.x.top = element_text(angle = 0, size=20),
+        panel.spacing = unit(0, "lines"), 
+        legend.position = "none")
+
+p_second <- ggplot(combined_data %>% filter(Chromosome %in% second_chroms), 
+                   aes(x = Position, y = value)) +
+  rasterize(geom_point(aes(color = type), alpha = 0.6, size = 2)) +
+  geom_rect(aes(xmin = startC, xmax = endC, ymin = -Inf, ymax = Inf), 
+            color = "red", linewidth = 0.1, fill = "transparent") +
+  facet_grid(rows = vars(type), cols = vars(Chromosome), scales = "free_y",labeller = custom_labeller) +
+  scale_color_manual(values = c("steelblue", "black")) +
+  theme_minimal() +
+  labs(x = "Position", y = "", title = "") +
+  theme(strip.text.y = element_text(angle = 0, size=20),
+        strip.text.x.top = element_text(angle = 0, size=20),
+        panel.spacing = unit(0, "lines"), axis.title.x.bottom = element_text(angle = 0, size=20),
+        legend.position = "none")
+
+p_full <- p_first / p_second
+
+
+
+ggsave(p_full, file="Supplementary_panel_Feb10.pdf", width = 25, height = 15)
