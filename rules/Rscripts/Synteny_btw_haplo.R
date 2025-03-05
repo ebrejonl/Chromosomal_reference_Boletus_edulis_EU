@@ -78,26 +78,52 @@ library(jtools)
 genome_width <- .08
 skip <- .08
 
-synt = full |> group_by(ID) |> filter(!is.na(x)) |> mutate(n=length(ID)) |> filter(n==4) |> 
+synt = full |> 
+  group_by(ID) |> 
+  filter(!is.na(x)) |> 
+  mutate(n = length(ID)) |> 
+  filter(n == 4) |> 
   ggplot() +
-  geom_diagonal_wide(aes(x = x, y = y, group = ID, color=as.factor(even_odd),
-fill=as.factor(even_odd)),
+  geom_diagonal_wide(aes(x = x, y = y, group = ID), 
+                         color = "#cacfd2",
+                         fill = "#cacfd2",  
                      orientation = "y", linewidth = .4)  +
-  scale_fill_manual(values = c("#4c4763","#cacfd2" )) +
-  scale_color_manual(values = c("#4c4763","#cacfd2" )) +
+  new_scale_color() +
+  new_scale_fill() +
   geom_rect(data = index_full,
             aes(xmin = start, xmax = end,
                 ymin = y + (label_sign * skip),
-                ymax = y + (label_sign * (skip + genome_width)*0.2)),
-            linewidth = .1,
-            color = "gray60", fill = "gray80")+
+                ymax = y + (label_sign * (skip + genome_width) * 0.2), 
+                fill = Haplotype, color = Haplotype),
+            linewidth = .1, alpha = .7) +
+  scale_fill_manual(values = c("#697787ff", "#c73f0aff"), guide = "none") + 
+  scale_color_manual(values = c("#697787ff", "#c73f0aff"), guide = "none") + 
   geom_text(data = index_full,
             aes(x = mid,
-                y = y + (label_sign *  (2.2 * skip + genome_width)*0.8),
-                label = Chr)) + theme_void() +
-  theme(panel.background = element_blank(), panel.grid = element_blank(),
-axis.line.x = element_blank(),axis.line.y = element_blank(),
-        axis.text = element_blank(), legend.position = "none")
+                y = y + (label_sign * (2.2 * skip + genome_width) * 0.8),
+                label = Chr)) + 
+  theme_void() +
+  theme(panel.background = element_blank(), 
+        panel.grid = element_blank(), 
+        legend.position = "right") + 
+  new_scale_color() +
+  new_scale_fill() + 
+  geom_diagonal_wide(data = full |> 
+                       group_by(ID) |> 
+                       filter(!is.na(x)) |> 
+                       mutate(n = length(ID)) |> 
+                       filter(n == 4) |> 
+                       filter(Chr == "Chr3") |> 
+                       mutate(rr = ifelse(x > 9.0e+06 & x < 9750000, "A", "B")) |> 
+                       filter(rr == "A") %>%
+                       group_by(ID) |>       
+                       mutate(n_b = n()) |>  
+                       filter(n_b == 4),
+                     aes(x = x, y = y, group = ID, fill = "Large inversion"),  
+                     color = "#30a901",
+                     orientation = "y", linewidth = .4) +
+  scale_fill_manual(values = c("Large inversion" = "#30a901"), name = "") + 
+  scale_color_manual(values = c("#30a901"), guide = "none") 
 #synt
 
 saveRDS(synt, "snakemake@input[['busco_plot']]")
