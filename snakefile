@@ -24,7 +24,8 @@ rule all:
         #"Data/Fasta/Haplotype2_renamed_reordered_with_contigs.fasta.fai",
         "Figure4_4Dec.pdf",
         #"Results/Busco/Synteny_haplotypes_busco.RDS",
-        "Figure1.pdf"
+        "Figure1.pdf",
+        "Supplementary_Figure2.pdf"
 
 
 
@@ -38,3 +39,4 @@ include: "./rules/Hi-C_contact_map.smk"
 include: "./rules/BUSCO.smk"
 include: "./rules/TE_pred.smk"
 include: "./rules/karyotype_plot.smk"
+include: "./rules/ATcontent_supp_figure.smk"
