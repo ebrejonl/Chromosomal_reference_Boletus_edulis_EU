@@ -17,7 +17,8 @@ This is a snakemake pipeline for all analysis, with software packaged in contain
 The reference genome assembly and newly generated short reads can be found at PRJNA1187522 (available at publication)
 
 #### The entire pipeline looks like this:
-![workflow_dag](https://github.com/user-attachments/assets/11553806-7d36-4596-860a-3deb889e6ae5)
+![rulegraphMars5](https://github.com/user-attachments/assets/c89d28b6-5621-42b2-86ef-7f38248b56f2)
+
 
 
 
