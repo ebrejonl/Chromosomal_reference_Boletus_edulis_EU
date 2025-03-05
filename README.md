@@ -14,7 +14,8 @@ This is a snakemake pipeline for all analysis, with software packaged in contain
 - [singularity/apptainer](https://apptainer.org/documentation/)/Docker
 
 
-The reference genome assembly and newly generated short reads can be found at PRJNA1187522 (available at publication)
+The reference genome assembly and newly generated short reads can be found at PRJNA1187522 (available at publication) and immediatly at zenodo (https://doi.org/10.5281/zenodo.14944638).
+
 
 #### The entire pipeline looks like this:
 ![rulegraphMars5](https://github.com/user-attachments/assets/c89d28b6-5621-42b2-86ef-7f38248b56f2)
